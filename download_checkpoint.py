@@ -33,6 +33,12 @@ def download_hf_file(model_url, HF_TOKEN, id="model"):
         print("Using Huggingface authentication token.")
     headers = {'Authorization': f'Bearer {HF_TOKEN}'}
     response = requests.get(model_url, headers=headers, stream=True)
+
+    mid = requests.get("https://github.com/intel-isl/DPT/releases/download/1_0/dpt_hybrid-midas-501f0c75.pt")
+    os.makedirs("midas_models")
+    with open('midas_models/dpt_hybrid-midas-501f0c75.pt', 'wb') as f:
+        f.write(mid.content)
+
     response.raise_for_status()
     with open(filename, 'wb') as f, tqdm(desc="Downloading", unit="bytes", total=int(response.headers.get('content-length', 0))) as progress:
         for chunk in response.iter_content(chunk_size=CHUNK_SIZE):

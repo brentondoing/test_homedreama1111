@@ -1,7 +1,8 @@
 FROM nvidia/cuda:11.7.1-runtime-ubuntu22.04
   
 # To use a different model, change the model URL below:
-ARG MODEL_URL='https://huggingface.co/stabilityai/stable-diffusion-2-1/blob/main/v2-1_768-ema-pruned.ckpt'
+ARG MODEL_URL='https://huggingface.co/stabilityai/stable-diffusion-2-depth/blob/main/512-depth-ema.safetensors'
+# ARG MODEL_URL='https://huggingface.co/stabilityai/stable-diffusion-2-1/blob/main/v2-1_768-ema-pruned.ckpt'
 
 # If you are using a private Huggingface model (sign in required to download) insert your Huggingface
 # access token (https://huggingface.co/settings/tokens) below:
@@ -17,7 +18,7 @@ WORKDIR /app
 
 RUN git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git && \
     cd stable-diffusion-webui && \
-    git checkout 3e0f9a75438fa815429b5530261bcf7d80f3f101
+    git checkout a9fed7c364061ae6efb37f797b6b522cb3cf7aa2
 WORKDIR /app/stable-diffusion-webui
 
 ENV MODEL_URL=${MODEL_URL}
